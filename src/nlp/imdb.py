@@ -44,6 +44,8 @@ sequences = tokenizer.texts_to_sequences(imdb_sentences)
 
 # print(tokenizer.word_index)
 
+# Wtih Own sentences 
+print("===== To sequences with own sentences START =====")
 sentences = [
     'Today is a sunny day',
     'Today is a rainy day',
@@ -52,3 +54,8 @@ sentences = [
 
 sequences = tokenizer.texts_to_sequences(sentences)
 print(sequences)
+
+reverse_word_index = dict([(value, key) for (key, value) in tokenizer.word_index.items()])
+decoded_review = ' '.join([reverse_word_index.get(i, '?') for i in sequences[0]])
+print(decoded_review)
+print("===== To sequences with own sentences END =====")
