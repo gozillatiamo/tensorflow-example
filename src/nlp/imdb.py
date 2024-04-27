@@ -25,10 +25,10 @@ for item in train_data:
     sentence = str(item['text'].decode('UTF-8').lower())
     soup = BeautifulSoup(sentence)
     sentence = soup.get_text()
-    sentenct = sentence.replace(",", " , ")
-    sentenct = sentence.replace(".", " . ")
-    sentenct = sentence.replace("-", " - ")
-    sentenct = sentence.replace("/", " / ")
+    sentence = sentence.replace(",", " , ")
+    sentence = sentence.replace(".", " . ")
+    sentence = sentence.replace("-", " - ")
+    sentence = sentence.replace("/", " / ")
     words = sentence.split()
     filtered_sentence = ""
     for word in words:
