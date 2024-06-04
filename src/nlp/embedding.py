@@ -1,5 +1,6 @@
 import json 
 import string
+import io
 import numpy as np
 import tensorflow as tf
 import matplotlib.pyplot as plt
@@ -152,8 +153,8 @@ def plot_graphs(history, string):
     plt.legend([string, 'val_'+string])
     plt.show()
 
-plot_graphs(history, "accuracy")
-plot_graphs(history, "loss")
+# plot_graphs(history, "accuracy")
+# plot_graphs(history, "loss")
 
 def plot_word_frequency(ordered_words):
     xs=[]
@@ -174,9 +175,30 @@ sequences = tokenizer.texts_to_sequences(sentences)
 # print(sequences)
 padded = pad_sequences(sequences, maxlen=max_length, padding=padding_type, truncating=trunc_type)
 # print(padded)
-print(model.predict(padded))
+# print(model.predict(padded))
 
 # wc=tokenizer.word_counts
 # ordered_words = (OrderedDict(sorted(wc.items(), key=lambda t: t[1], reverse=True)))
 # print(ordered_words)
 # plot_word_frequency(ordered_words)
+
+# Embedding Projector
+reverse_word_index = dict([(value, key) for (key, value) in word_index.items()])
+print(reverse_word_index)
+e = model.layers[0]
+weights = e.get_weights()[0] 
+print(weights.shape)
+print(reverse_word_index[2])
+print(weights[2])
+
+# Writh TSV, and metadata files
+out_v = io.open('content/vecs.tsv', 'w', encoding='utf-8')
+out_m = io.open('content/meta.tsv', 'w', encoding='utf-8')
+for word_num in range(1, vocab_size):
+    word = reverse_word_index[word_num]
+    embeddings = weights[word_num]
+    out_m.write(word + "\n")
+    out_v.write('\t'.join([str(x) for x in embeddings]) + "\n")
+
+out_v.close()
+out_m.close()
