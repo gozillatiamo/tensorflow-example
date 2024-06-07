@@ -3,3 +3,4 @@ tensorflow-datasets==v4.9.4
 tensorflow-addons==0.22.0
 beautifulsoup4
 matplotlib
+tensorflow-hub
