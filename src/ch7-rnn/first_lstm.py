@@ -240,9 +240,10 @@ model = tf.keras.Sequential(
         tf.keras.layers.Embedding(vocab_size, embedding_dim),
         # Multiple LSTM layers, return_sequences=True to allow stacking LSTM layers.
         tf.keras.layers.Bidirectional(
-            tf.keras.layers.LSTM(embedding_dim, return_sequences=True)
+            tf.keras.layers.LSTM(embedding_dim, return_sequences=True, dropout=0.2)
         ),
-        tf.keras.layers.Bidirectional(tf.keras.layers.LSTM(embedding_dim)),
+        # Add Dropouts to improve the overfitting.
+        tf.keras.layers.Bidirectional(tf.keras.layers.LSTM(embedding_dim, dropout=0.2)),
         tf.keras.layers.Dense(24, activation="relu"),
         tf.keras.layers.Dense(1, activation="sigmoid"),
     ]
